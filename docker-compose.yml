@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  reverseproxy:
+    build:
+      context: ./LPDockerNginx/Nginx
+      dockerfile: Nginx.Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+  api:
+    depends_on:
+      - reverseproxy
+    build:
+      context: ./LPDockerNginx
+      dockerfile: Api.Dockerfile
+    expose:
+      - "5000"
+    restart: always
+
+# docker-compose build
+# docker-compose up -d
+# docker-compose down
+
+# Browse to: http://localhost/weatherforecast
